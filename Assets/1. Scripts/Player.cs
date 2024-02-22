@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public float jumpPower; // 점프 힘
     public float jumpCount; // 점프 횟수
     public float rotateSpeed; // 회전 속도
-
+    public float runSpeed; // 달리기 속도
 
 
     Rigidbody rb;
@@ -25,11 +25,19 @@ public class Player : MonoBehaviour
     {
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");
+        float speedModifier = 1f;
+
+        // Shift 키를 누르고 있을 때만 이동 속도를 증가
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speedModifier = 2f; // 이동 속도 증가
+        }
 
         Vector3 dir = new Vector3(h, 0, v);
         dir.Normalize();
         dir = transform.TransformDirection(dir);
-        rb.MovePosition(rb.position + dir * moveSpeed * Time.deltaTime);
+        rb.MovePosition(rb.position + dir * moveSpeed * speedModifier * Time.deltaTime);
+
 
 
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < 1)
