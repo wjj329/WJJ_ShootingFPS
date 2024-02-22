@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public GameObject bulletPref; // 총알 프리팹 변수
+    //public GameObject bulletPref; // 총알 프리팹 변수
     public GameObject ShootEffectPref; // 슈팅 효과 프리팹 변수
 
-    public float shootingInterval = 0.2f; // 총알 발사 간격
+    public float shootingInterval = 0.1f; // 총알 발사 간격
     private float lastShootTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.visible = false; 
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;   // 커서 안보이게
+        Cursor.lockState = CursorLockMode.Confined; // 게임 화면 못 벗어나게 잠그기
         lastShootTime = -shootingInterval; 
     }
 
