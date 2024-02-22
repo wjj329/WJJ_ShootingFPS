@@ -17,7 +17,7 @@ C# 기반 유니티 1인칭 슈팅 게임
 
 
 ### 인트로 화면
-![Uploading image.png…]()
+![image](https://github.com/wjj329/WJJ_ShootingFPS/assets/154484828/ab608cde-d22b-4372-866b-b101c7b453c0)
 
  - Start 버튼을 누르면 게임 플레이 씬으로 넘어 감.
 
