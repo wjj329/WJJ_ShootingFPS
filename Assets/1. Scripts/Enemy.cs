@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI; // AI 관련 클래스 사용
 
 public class Enemy : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class Enemy : MonoBehaviour
 
     Transform player; // 플레이어
     float distance; // 플레이어와의 거리
+
+    NavMeshAgent agent; // NavMeshAgent 컴포넌트
 
 
 
@@ -49,6 +52,8 @@ public class Enemy : MonoBehaviour
     {
         // Player 컴포넌트로 찾은 플레이어의 transtorm 컴포넌트 가져오기
         player = FindObjectOfType<Player>().transform;
+
+        agent = GetComponent<NavMeshAgent>(); // Nav mesh Agent 컴포넌트 가져옴
     }
 
     // Update is called once per frame
@@ -79,6 +84,8 @@ public class Enemy : MonoBehaviour
         if (distance <= 8) // 플레이어와의 거리가 8 이상이면
         {
             eState = EnemyState.Walk; // 이동 상태로 전환
+
+            agent.isStopped = false; // 이동 시작
         }
     }
 
@@ -87,11 +94,22 @@ public class Enemy : MonoBehaviour
         if (distance > 8) // 플레이어와의 거리가 8 보다 크다면
         {
             eState = EnemyState.Idle; // 기본 상태로 전환
+            agent.isStopped = true; // 이동 중단
+            agent.ResetPath(); // 경로 초기화
         }
 
-        if (distance <= 2) // 플레이어와의 거리가 2 이하라면
+        else if (distance <= 2) // 플레이어와의 거리가 2 이하라면
         {
             eState = EnemyState.Attack; // 공격으로 전환
+            agent.isStopped = true; // 이동 중단
+            agent.ResetPath(); // 경로 초기화
+        }
+
+        // 그 외 상황 : 다른 상태로 전환하지 않을 때
+        else
+        {
+            // 플레이어 위치를 목적지로 설정
+            agent.SetDestination(player.position);
         }
     }
 
@@ -101,6 +119,7 @@ public class Enemy : MonoBehaviour
         if (distance > 2)
         {
             eState = EnemyState.Walk; // 이동 상태로 전환
+            agent.isStopped = false; // 이동 시작
         }
     }
 }

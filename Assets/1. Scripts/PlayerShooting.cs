@@ -15,7 +15,12 @@ public class PlayerShooting : MonoBehaviour
     {
         Cursor.visible = false;   // 커서 안보이게
         Cursor.lockState = CursorLockMode.Confined; // 게임 화면 못 벗어나게 잠그기
-        lastShootTime = -shootingInterval; 
+
+        //총알 발사 초기화 작업
+        lastShootTime = -shootingInterval; // 처음에 즉시 발사
+
+
+
     }
 
     // Update is called once per frame
@@ -26,7 +31,10 @@ public class PlayerShooting : MonoBehaviour
             if (Input.GetMouseButton(0) && Time.time - lastShootTime > shootingInterval)
             {
                 Shoot(); // 총을 발사하는 함수 호출
-                lastShootTime = Time.time; // 마지막 총 발사 시간 갱신
+
+                lastShootTime = Time.time; 
+                // 마지막 총 발사 시간 갱신
+                //총을 발사한 후에, 현재의 시간을 lastShootTime에 저장
             }
         }
     }
@@ -55,6 +63,9 @@ public class PlayerShooting : MonoBehaviour
         {
             hit.transform.SendMessage("Damaged", 10);
             // SendMessage를 사용하여 간접적으로 Damaged 함수 호출
+
+            // 맞은 물체의 이름 출력 (바로 접근 할 수 있는 컴포넌트는  Transfrom, Rigidbody, Collider만 가능)
+            //print(hit.transform.name);
         }
     }
 }
