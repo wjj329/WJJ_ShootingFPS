@@ -36,6 +36,9 @@ public class Enemy : MonoBehaviour
         // 감소한 체력을 체력바에 표시
         hpBar.value = hp;
 
+        agent.isStopped = true;// 이동중단
+        agent.ResetPath(); // 경로 초기화
+
         if (hp > 0) // 체력이 남아있다면
         {
             eState = EnemyState.Damaged; // 피격 상태로 전환
